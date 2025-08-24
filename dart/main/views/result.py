@@ -1,0 +1,38 @@
+from django import views
+from django.shortcuts import get_object_or_404, render, redirect
+from django.urls import reverse_lazy
+from django.utils import timezone
+from main.models import Game
+
+class ResultView(views.View):
+    def get(self, request, game_id):
+        game = get_object_or_404(Game, id=game_id)
+        rounds = game.game_rounds.all()
+
+        total_points = sum(rounds.values_list('points', flat=True))
+        round_count = rounds.count()
+        score_difference = game.score - total_points
+
+        games_today = Game.objects.filter(date=timezone.now()).order_by('-id')
+        last_5 = len(games_today[:5])
+        last_5_won = sum(1 for game in games_today[:5] if game.status == 1)
+        games_today_won = games_today.filter(status=1).count()
+        games_today_lost = games_today.filter(status=2).count()
+
+        return render(request, "result.html", context={
+            'game': game,
+            'total_points': total_points,
+            'round_count': round_count,
+            'score_difference': score_difference,
+            'games_today_won': games_today_won,
+            'games_today_lost': games_today_lost,
+            'last_5_won': last_5_won,
+            'last_5': last_5
+        })
+
+    def post(self, request, game_id):
+        """create new game with same stats"""
+        last_game = get_object_or_404(Game, id=game_id)
+        new_game = Game(rounds=last_game.rounds, score=last_game.score)
+        new_game.save()
+        return redirect(reverse_lazy('game', kwargs={'game_id': new_game.id}))

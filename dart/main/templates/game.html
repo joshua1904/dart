@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+
+{% block header %}
+Round {{game.id}}
+{% endblock %}
+
+{% block content %}
+
+    <div class="d-flex justify-content-center">
+        <div>
+            <p class="fs-4 mb-4">
+            <strong>Total Rounds Played:</strong> <span class="text-primary">{{ round_count }} / {{game.rounds}}</span>
+        </p>
+        <p class="fs-4 mb-4">
+            <strong>Current Score Left:</strong> <span class="text-danger">{{ current_score_left }}</span>
+        </p>
+        <form method="post" action="">
+             {% csrf_token %}
+            <input name="this_score">
+            <button type="submit" class="btn btn-primary">OK</button>
+        </form>
+        </div>
+
+    </div>
+{% endblock %}

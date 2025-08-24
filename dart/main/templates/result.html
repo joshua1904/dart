@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+
+{% block header %}
+Round {{game.id}}
+{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm mx-auto" style="max-width: 480px;">
+     <div class="card-header bg-secondary    text-white text-center">
+        <h2 class="mb-0 fs-1 fw-bold">General</h2>
+         <p>Today: won: {{games_today_won}} lost: {{games_today_lost}}</p>
+         <p>last 5: {{last_5_won}} / 5</p>
+    </div>
+</div>
+<div class="card shadow-sm mx-auto" style="max-width: 480px;">
+   <div class="card-header {% if game.status == 1 %}bg-success{% else %}bg-danger{% endif %} text-white text-center">
+    <h2 class="mb-0 fs-1 fw-bold">
+        {% if game.status == 1 %}
+            🎉 You Won
+        {% else %}
+            💀 You Lost
+        {% endif %}
+    </h2>
+</div>
+
+    <div class="card-body px-4 py-5 text-center">
+        <p class="fs-4 mb-4">
+            <strong>Total Rounds:</strong> <span class="text-primary">{{ game.game_rounds.count }}</span>
+        </p>
+        <p class="fs-4 mb-4">
+            <strong>Total Points:</strong> <span class="text-success">{{ total_points }}</span>
+        </p>
+        {% if game.status == 2 %}
+        <p class="fs-4 mb-4">
+            <strong>Score Difference:</strong>
+            <span class="text-danger">{{ score_difference }}</span>
+        </p>
+        {% endif %}
+
+   <div class="d-grid gap-3 mt-5">
+    <a href="{% url 'home' %}" class="btn btn-outline-secondary btn-lg w-100">
+        🏠 Home
+    </a>
+
+    <form method="post" action="{% url 'result' game.id %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-outline-primary btn-lg w-100">
+            🔁 New Game
+        </button>
+    </form>
+</div>
+    </div>
+</div>
+{% endblock %}
+

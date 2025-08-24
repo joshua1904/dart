@@ -1,0 +1,25 @@
+{% block title %}Game Over{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm mx-auto" style="max-width: 480px;">
+    <div class="card-header bg-danger text-white text-center">
+        <h2 class="mb-0 fs-1 fw-bold">💀 You Lost</h2>
+    </div>
+    <div class="card-body px-4 py-5 text-center">
+        <p class="fs-4 mb-4">
+            <strong>Total Rounds:</strong> <span class="text-primary">{{ round_count }}</span>
+        </p>
+        <p class="fs-4 mb-4">
+            <strong>Total Points:</strong> <span class="text-success">{{ total_points }}</span>
+        </p>
+        <p class="fs-4 mb-4">
+            <strong>Score Difference:</strong>
+            <span class="text-danger">{{ score_difference }}</span>
+        </p>
+
+        <div class="d-grid gap-2 mt-4">
+            <a href="{% url 'home' %}" class="btn btn-outline-secondary btn-lg">Home</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

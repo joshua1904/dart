@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Game Settings{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h4 class="card-title text-center mb-4">Game Settings</h4>
+        <form method="post">
+            {% csrf_token %}
+            {{form}}
+            <button type="submit" class="btn btn-primary w-100">Start Game</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
