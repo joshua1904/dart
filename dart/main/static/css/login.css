@@ -1,0 +1,42 @@
+/* Login Page Specific Styles */
+
+/* Additional custom styles for login page */
+.card {
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.input-group .btn {
+    border-left: none;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.input-group .form-control:focus {
+    border-right: none;
+}
+
+.input-group .form-control:focus + .btn {
+    border-color: var(--primary-color);
+}
+
+/* Enhanced form validation styling */
+.form-control.is-invalid {
+    border-color: var(--danger-color);
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.form-control.is-valid {
+    border-color: var(--success-color);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+/* Loading animation for submit button */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.btn:disabled .bi-hourglass-split {
+    animation: spin 1s linear infinite;
+}
