@@ -1,14 +1,14 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.utils import timezone
-
+from main.utils import GAME_STATUS_CHOICES
 
 class Game(models.Model):
     date = models.DateField(default=timezone.now())
     rounds = models.IntegerField(validators=[MinValueValidator(0)])
     score = models.IntegerField(validators=[MinValueValidator(0)])
     status = models.IntegerField(
-        choices=((0, 'in progress'), (1, 'won'), (2, 'lost')),
+        choices=GAME_STATUS_CHOICES,
         default=0
     )
 

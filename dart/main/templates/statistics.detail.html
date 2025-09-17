@@ -1,0 +1,19 @@
+                <table id="statistics-table" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Score</th>
+                            <th>Rounds</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for game in games %}
+                            <tr>
+                                <td>{{ game.score }}</td>
+                                <td>{{ game.game_rounds.count }}</td>
+                                <td>{{ game.get_status_display }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>

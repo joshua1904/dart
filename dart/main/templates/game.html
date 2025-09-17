@@ -1,26 +1,107 @@
 {% extends "base.html" %}
 
-
 {% block header %}
-Round {{game.id}}
+🎯 Round {{game.id}}
 {% endblock %}
 
 {% block content %}
+<div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+        <div class="card fade-in">
+            <div class="card-header bg-primary text-white text-center">
+                <h3 class="mb-0">
+                    <i class="bi bi-controller me-2"></i>
+                    Game Progress
+                </h3>
+            </div>
+            <div class="card-body text-center">
+                <!-- Progress Stats -->
+                <div class="row g-3 mb-4">
+                    <div class="col-6">
+                        <div class="p-3 rounded-3" style="background: linear-gradient(135deg, #e0f2fe 0%, #b3e5fc 100%);">
+                            <div class="d-flex align-items-center justify-content-center mb-2">
+                                <i class="bi bi-arrow-clockwise text-primary fs-4 me-2"></i>
+                                <span class="fw-bold text-primary fs-5">{{ round_count }}</span>
+                            </div>
+                            <small class="text-muted d-block">Rounds Played</small>
+                            <div class="progress mt-2" style="height: 6px;">
+                                <div class="progress-bar bg-primary" role="progressbar" 
+                                     style="width: {{ round_count|floatformat:0|add:0|div:game.rounds|mul:100 }}%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="p-3 rounded-3" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);">
+                            <div class="d-flex align-items-center justify-content-center mb-2">
+                                <i class="bi bi-target text-warning fs-4 me-2"></i>
+                                <span class="fw-bold text-warning fs-5">{{ current_score_left }}</span>
+                            </div>
+                            <small class="text-muted d-block">Score Left</small>
+                            <div class="progress mt-2" style="height: 6px;">
+                                <div class="progress-bar bg-warning" role="progressbar" 
+                                     style="width: 100%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-    <div class="d-flex justify-content-center">
-        <div>
-            <p class="fs-4 mb-4">
-            <strong>Total Rounds Played:</strong> <span class="text-primary">{{ round_count }} / {{game.rounds}}</span>
-        </p>
-        <p class="fs-4 mb-4">
-            <strong>Current Score Left:</strong> <span class="text-danger">{{ current_score_left }}</span>
-        </p>
-        <form method="post" action="">
-             {% csrf_token %}
-            <input name="this_score">
-            <button type="submit" class="btn btn-primary">OK</button>
-        </form>
+                <!-- Game Form -->
+                <div class="bg-light rounded-3 p-4">
+                    <h5 class="mb-3">
+                        <i class="bi bi-dart me-2 text-primary"></i>
+                        Enter Your Score
+                    </h5>
+                    <form method="post" action="" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        <div class="row g-3">
+                            <div class="col-8">
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white border-end-0">
+                                        <i class="bi bi-123 text-muted"></i>
+                                    </span>
+                                    <input type="number" 
+                                           name="this_score" 
+                                           class="form-control border-start-0" 
+                                           placeholder="Enter score..."
+                                           min="0" 
+                                           max="180" 
+                                           value="0"
+                                           required>
+                                </div>
+                                <div class="invalid-feedback text-start">
+                                    Please enter a valid score between 0 and 180.
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <button type="submit" class="btn btn-primary w-100">
+                                    <i class="bi bi-check-circle me-2"></i>
+                                    Submit
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-
     </div>
+</div>
+
+<script>
+// Form validation
+(function() {
+    'use strict';
+    window.addEventListener('load', function() {
+        var forms = document.getElementsByClassName('needs-validation');
+        var validation = Array.prototype.filter.call(forms, function(form) {
+            form.addEventListener('submit', function(event) {
+                if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+    }, false);
+})();
+</script>
 {% endblock %}

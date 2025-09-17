@@ -13,7 +13,7 @@ class ResultView(views.View):
         round_count = rounds.count()
         score_difference = game.score - total_points
 
-        games_today = Game.objects.filter(date=timezone.now()).order_by('-id')
+        games_today = Game.objects.filter(date=timezone.now(), rounds=game.rounds, score=game.score).order_by('-id')
         last_5 = len(games_today[:5])
         last_5_won = sum(1 for game in games_today[:5] if game.status == 1)
         games_today_won = games_today.filter(status=1).count()
@@ -27,7 +27,9 @@ class ResultView(views.View):
             'games_today_won': games_today_won,
             'games_today_lost': games_today_lost,
             'last_5_won': last_5_won,
-            'last_5': last_5
+            'last_5': last_5,
+            'percentage': last_5_won/last_5 * 100,
+            'category': f"{game.rounds} darts for {game.score} points"
         })
 
     def post(self, request, game_id):

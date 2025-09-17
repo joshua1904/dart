@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block header %}
+🏆 Statistics
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center g-4">
+    <div class="col-12 col-md-8 col-lg-6">
+        <div class="card fade-in">
+            <div class="card-header bg-secondary text-white text-center">
+                <h3 class="mb-0">
+                    <i class="bi bi-graph-up me-2"></i>
+                    Overall Statistics
+                </h3>
+                <form method="get" hx-get="{% url 'statistics' %}" hx-target="#statistics-table" hx-trigger="change">
+                    {{ filter.form }}
+                </form>
+            </div>
+            <div class="card-body">
+               {% include 'statistics.detail.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
