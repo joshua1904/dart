@@ -17,7 +17,7 @@ class GameView(views.View):
 
     def get(self, request, game_id: int):
         game, _, round_count, current_score_left = get_game_info(game_id)
-        return render(request, 'game.html', context={'round_count': round_count, 'current_score_left': current_score_left, 'game': game})
+        return render(request, 'single_player/game.html', context={'round_count': round_count, 'current_score_left': current_score_left, 'game': game})
 
     def post(self, request, game_id):
         game, _, round_count, current_score_left = get_game_info(game_id)

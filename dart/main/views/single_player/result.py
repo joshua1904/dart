@@ -19,7 +19,7 @@ class ResultView(views.View):
         games_today_won = games_today.filter(status=1).count()
         games_today_lost = games_today.filter(status=2).count()
 
-        return render(request, "result.html", context={
+        return render(request, "single_player/result.html", context={
             'game': game,
             'total_points': total_points,
             'round_count': round_count,

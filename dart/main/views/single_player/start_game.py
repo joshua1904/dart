@@ -8,14 +8,14 @@ from main.forms.game_form import GameForm
 class StartGame(views.View):
     def get(self, request):
         form = GameForm(initial={'rounds': 3, 'score': 121})
-        return render(request, 'start_game.html', context={
+        return render(request, 'single_player/start_game.html', context={
             'rounds': 3, 'score': 121, 'form': form
         })
 
     def post(self, request):
         form = GameForm(request.POST)
         if not form.is_valid():
-            return render(request, 'start_game.html', context={
+            return render(request, 'single_player/start_game.html', context={
                 'rounds': 3, 'score': 121, 'form': form
             })
 
