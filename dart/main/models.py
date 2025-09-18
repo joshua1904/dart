@@ -31,7 +31,7 @@ class MultiplayerGame(models.Model):
         default=0
     )
     online = models.BooleanField(default=False)
-    max_players = models.IntegerField(validators=[MinValueValidator(2), MaxValueValidator(10)])
+    max_players = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)])
     creator = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     winner = models.ForeignKey('MultiplayerPlayer', on_delete=models.CASCADE, related_name='winner', null=True, blank=True)
 

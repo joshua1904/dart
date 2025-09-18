@@ -4,7 +4,7 @@ from asgiref.sync import async_to_sync
 from main.models import MultiplayerGame, MultiplayerPlayer, MultiplayerRound
 from django.template.loader import render_to_string
 from urllib.parse import parse_qs
-from main.business_logic.multiplayer_game import get_game_context, get_turn, add_round
+from main.business_logic.multiplayer_game import get_game_context, get_turn, add_round, get_ending_context
 
 
 class MultiplayerConsumer(WebsocketConsumer):
@@ -144,5 +144,6 @@ class GameConsumer(WebsocketConsumer):
         game = MultiplayerGame.objects.get(id=game_id)
         context = get_game_context(game)
         context['winner'] = game.winner
+        context['winner_stats'] = get_ending_context(game)['winner_stats']
         html = render_to_string('multiplayer/game/partials/ending_screen.html', context=context)
         self.send(text_data=f'<div id="game-content" hx-swap-oob="innerHTML">{html}</div>')

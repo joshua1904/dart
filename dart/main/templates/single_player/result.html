@@ -1,8 +1,5 @@
 {% extends "base.html" %}
 
-{% block header %}
-🏆 Game Results
-{% endblock %}
 
 {% block content %}
 <div class="row justify-content-center g-4">
@@ -103,7 +100,7 @@
 
                 <!-- Action Buttons -->
                 <div class="d-grid gap-3 mt-5">
-                    <a href="{% url 'home' %}" class="btn btn-outline-secondary btn-lg">
+                    <a href="{% url 'singleplayer' %}" class="btn btn-outline-secondary btn-lg">
                         <i class="bi bi-house me-2"></i>
                         🏠 Back to Home
                     </a>

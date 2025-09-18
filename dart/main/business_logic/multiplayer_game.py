@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from django.db.models import Sum
+from django.db.models import Sum, Avg
 from main.models import MultiplayerGame, MultiplayerPlayer, MultiplayerRound
 
 def get_game_info(game_id: int):
@@ -63,8 +63,19 @@ def add_round(game, player, points) -> bool:
     return False
 
 
+def get_average_points(game, player) -> float:
+    return game.game_rounds.filter(player=player).aggregate(average_points=Avg('points'))['average_points']
+
+def get_needed_rounds(game, player) -> int:
+    return game.game_rounds.filter(player=player).count()
+
 def get_ending_context(game) -> dict:
+    winner_stats = {
+        'average_points': get_average_points(game, game.winner),
+        'needed_rounds': get_needed_rounds(game, game.winner),
+    }
     return {
         'game': game,
         'winner': game.winner,
+        'winner_stats': winner_stats,
     }

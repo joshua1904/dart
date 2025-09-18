@@ -1,3 +1,4 @@
+from .home import HomeView
 from .single_player.start_game import StartGame
 from .single_player.game import GameView
 from .single_player.result import ResultView
@@ -6,6 +7,7 @@ from .multiplayer.start_game import StartGame as MultiplayerStartGame
 from .multiplayer.lobby import Lobby
 from .multiplayer.game import MultiplayerGameView
 __all__ = [
+    HomeView.__name__,
     StartGame.__name__,
     GameView.__name__,
     ResultView.__name__,

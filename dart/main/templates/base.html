@@ -21,12 +21,24 @@
     <!-- Custom styles -->
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    
+    <style>
+        header h1 a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        header h1 a:hover {
+            text-decoration: none;
+            color: inherit;
+        }
+    </style>
 </head>
 <body>
     <div class="app-container">
         <!-- Header -->
         <header>
-            <h1>{% block header %}🎯 Dart Game{% endblock %}</h1>
+            <h1>{% block header %}<a href="{% url 'home' %}">🎯 Dart</a>{% endblock %}</h1>
         </header>
 
         <!-- Main content area -->

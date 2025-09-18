@@ -1,0 +1,260 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home - Dart Game{% endblock %}
+
+{% block content %}
+<div class="home-container fade-in">
+    <!-- Welcome Section -->
+    <div class="welcome-section text-center mb-5">
+        <div class="welcome-content">
+            <h2 class="welcome-title">Welcome to Dart Game!</h2>
+            <p class="welcome-subtitle">Choose your preferred game mode and start playing</p>
+        </div>
+    </div>
+
+    <!-- Game Mode Selection -->
+    <div class="mode-selection">
+                        <a href="{% url 'singleplayer' %}" class="btn btn-primary btn-lg mode-btn">
+                            <i class="bi bi-play-fill me-2"></i>
+                            Single Player Game
+                        </a>
+                        
+                        <a href="{% url 'multiplayer' %}" class="btn btn-success btn-lg mode-btn">
+                            <i class="bi bi-play-fill me-2"></i>
+                            Multiplayer Game
+                        </a>
+    </div>
+
+</div>
+
+<style>
+.home-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.welcome-section {
+    margin-bottom: 3rem;
+}
+
+.welcome-content {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.welcome-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.welcome-subtitle {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+}
+
+.mode-selection {
+    margin-bottom: 3rem;
+}
+
+.mode-card {
+    background: white;
+    border-radius: 20px;
+    padding: 2.5rem;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s ease;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.mode-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+}
+
+.mode-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+}
+
+.offline-card:hover {
+    box-shadow: 0 30px 60px rgba(99, 102, 241, 0.2);
+}
+
+.online-card:hover {
+    box-shadow: 0 30px 60px rgba(16, 185, 129, 0.2);
+}
+
+.mode-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    color: var(--primary-color);
+}
+
+.offline-card .mode-icon {
+    color: var(--primary-color);
+}
+
+.online-card .mode-icon {
+    color: var(--success-color);
+}
+
+.mode-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #1e293b;
+}
+
+.mode-description {
+    font-size: 1.1rem;
+    color: #64748b;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.mode-features {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 2rem;
+    text-align: left;
+}
+
+.mode-features li {
+    padding: 0.5rem 0;
+    color: #475569;
+    font-size: 1rem;
+}
+
+.mode-features i {
+    color: var(--success-color);
+    margin-right: 0.75rem;
+    font-size: 1.1rem;
+}
+
+.mode-btn {
+    width: 100%;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 1rem;
+}
+
+.quick-actions {
+    text-align: center;
+}
+
+.quick-actions .btn {
+    margin: 0 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+.game-info {
+    margin-top: 3rem;
+}
+
+.info-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.info-title {
+    color: #1e293b;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+}
+
+.info-content h6 {
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    font-size: 1.1rem;
+}
+
+.info-content p {
+    color: #64748b;
+    margin-bottom: 0;
+    line-height: 1.6;
+}
+
+/* Animation delays */
+.bounce-in[data-delay="0.1s"] {
+    animation-delay: 0.1s;
+}
+
+.bounce-in[data-delay="0.2s"] {
+    animation-delay: 0.2s;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .welcome-title {
+        font-size: 2rem;
+    }
+    
+    .welcome-subtitle {
+        font-size: 1rem;
+    }
+    
+    .mode-card {
+        padding: 2rem 1.5rem;
+    }
+    
+    .mode-icon {
+        font-size: 3rem;
+    }
+    
+    .mode-title {
+        font-size: 1.5rem;
+    }
+    
+    .mode-description {
+        font-size: 1rem;
+    }
+    
+    .quick-actions .btn {
+        margin: 0.25rem;
+        display: block;
+        width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .welcome-content {
+        padding: 1.5rem;
+    }
+    
+    .mode-card {
+        padding: 1.5rem;
+    }
+    
+    .info-card {
+        padding: 1.5rem;
+    }
+}
+</style>
+{% endblock %}

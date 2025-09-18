@@ -1,40 +1,121 @@
-<div class="col-12 col-md-10 col-lg-8">
-    <!-- Game Status and Player Queue -->
-    <div class="card">
-        <div class="card-header bg-primary text-white">
-            <h4 class="mb-0">
-                <i class="bi bi-person-circle me-2"></i>
-                Game Status & Player Queue
-            </h4>
+<div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8">
+        <!-- Game Over Header -->
+        <div class="card mb-4 fade-in">
+            <div class="card-header bg-success text-white text-center">
+                <h2 class="mb-0">
+                    <i class="bi bi-trophy-fill me-2"></i>
+                    Game Complete!
+                </h2>
+            </div>
         </div>
-        <div class="card-body">
-            <h1 class="text-center">Game Ended</h1>
-            <h2 class="text-center">Winner: {{ game.winner.player.username }}</h2>
-            <!-- Player Queue (Small Display) -->
-            <hr class="my-4">
-            <h5 class="mb-3">
-                <i class="bi bi-list-ol me-2"></i>
-                 <i class="bi bi-trophy"></i>
-            </h5>
-            <div class="row">
-                <div class="col-md-4 col-sm-6 mb-3">
-                    <div class="card bg-success">
-                        <div class="card-body p-3">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <h6 class="card-title mb-1">
-                                        {{ winner.player.username }}
-                                    </h6>
-                        
-                                </div>
-                               
-                            </div>
+
+        <!-- Winner Announcement -->
+        <div class="card mb-4 bounce-in">
+            <div class="card-body text-center">
+                <div class="winner-crown mb-3">
+                    <i class="bi bi-trophy-fill text-warning" style="font-size: 4rem;"></i>
+                </div>
+                <h1 class="display-4 fw-bold text-success mb-3">
+                    🎉 {{ winner.player.username }} Wins! 🎉
+                </h1>
+                <p class="lead text-muted">
+                    Congratulations on finishing the game!
+                </p>
+            </div>
+        </div>
+
+        <!-- Winner Stats -->
+        <div class="row mb-4">
+            <div class="col-md-6 mb-3">
+                <div class="card stats-card-rounds h-100">
+                    <div class="card-body text-center">
+                        <div class="stats-icon mb-3">
+                            <i class="bi bi-arrow-repeat text-primary" style="font-size: 2.5rem;"></i>
+                        </div>
+                        <h3 class="fw-bold text-primary">{{ winner_stats.needed_rounds }}</h3>
+                        <p class="text-muted mb-0">Rounds to Victory</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Summary -->
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">
+                    <i class="bi bi-info-circle me-2"></i>
+                    Game Summary
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-md-4 mb-3">
+                        <div class="border-end">
+                            <h5 class="text-primary">{{ game.score }}</h5>
+                            <p class="text-muted mb-0">Target Score</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="border-end">
+                            <h5 class="text-success">{{ game.max_players }}</h5>
+                            <p class="text-muted mb-0">Players</p>
                         </div>
                     </div>
                 </div>
-              
-             
             </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="text-center">
+            <a href="{% url 'multiplayer' %}" class="btn btn-primary btn-lg me-3">
+                <i class="bi bi-house-door me-2"></i>
+                Back to Home
+            </a>
+            <a href="{% url 'statistics' %}" class="btn btn-outline-secondary btn-lg">
+                <i class="bi bi-bar-chart me-2"></i>
+                View Statistics
+            </a>
         </div>
     </div>
 </div>
+
+<style>
+.winner-crown {
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+.stats-icon {
+    transition: transform 0.3s ease;
+}
+
+.stats-card-rounds:hover .stats-icon,
+.stats-card-score:hover .stats-icon {
+    transform: scale(1.1);
+}
+
+.border-end {
+    border-right: 2px solid #e2e8f0 !important;
+}
+
+@media (max-width: 768px) {
+    .border-end {
+        border-right: none !important;
+        border-bottom: 2px solid #e2e8f0 !important;
+        padding-bottom: 1rem;
+        margin-bottom: 1rem;
+    }
+}
+</style> 
