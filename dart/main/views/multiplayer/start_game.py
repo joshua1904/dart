@@ -14,12 +14,14 @@ class StartGame(views.View):
         if not form.is_valid():
             return render(request, 'multiplayer/start_game.html', context={'form': form})
 
-        game = form.save()
+        game = form.save(commit=False)
+        game.creator = request.user
+        game.save()
         # Add the creator as the first player
         from main.models import MultiplayerPlayer
         MultiplayerPlayer.objects.create(
             game=game,
             player=request.user,
-            rank=1
+            rank=1,
         )
         return redirect(reverse_lazy('lobby', kwargs={'game_id': game.id}))

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Multiplayer Game{% endblock %}
+
+{% block header %}🎯 Multiplayer Game{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div id="ws-connection" hx-ext="ws" ws-connect="/ws/{{ game.id }}/">
+        <!-- Swappable game content -->
+        <div id="game-content">
+            {% include 'multiplayer/game/partials/game_card.html' %}
+        </div>
+    </div>
+</div>
+
+<!-- Back to Lobby -->
+<div class="text-center mt-4">
+    <a href="{% url 'lobby' game_id=game.id %}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left me-2"></i>
+        Back to Lobby
+    </a>
+</div>
+{% endblock %}
+
+

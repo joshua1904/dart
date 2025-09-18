@@ -32,6 +32,8 @@ class MultiplayerGame(models.Model):
     )
     online = models.BooleanField(default=False)
     max_players = models.IntegerField(validators=[MinValueValidator(2), MaxValueValidator(10)])
+    creator = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    winner = models.ForeignKey('MultiplayerPlayer', on_delete=models.CASCADE, related_name='winner', null=True, blank=True)
 
 
 class MultiplayerRound(models.Model):
@@ -44,3 +46,6 @@ class MultiplayerPlayer(models.Model):
     game = models.ForeignKey('MultiplayerGame', on_delete=models.CASCADE, related_name='game_players')
     player = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     rank = models.IntegerField()
+
+    def __str__(self):
+        return f"{self.player.username}"

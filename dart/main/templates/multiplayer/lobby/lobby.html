@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Lobby - Multiplayer Dart Game{% endblock %}
+
+{% block header %}🎮 Game Lobby{% endblock %}
+
+{% block content %}
+<!-- Lobby specific styles -->
+<link rel="stylesheet" href="{% static 'css/lobby.css' %}">
+
+<div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8">
+        <div class="card fade-in">
+            <div class="card-header bg-primary text-white">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h3 class="mb-0">
+                            <i class="bi bi-people me-2"></i>
+                            Game Lobby
+                        </h3>
+                        <small class="opacity-75">Game ID: {{ game.id }}</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card-body">
+                <!-- Game Info -->
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="info-card">
+                            <div class="info-icon">
+                                <i class="bi bi-target text-primary"></i>
+                            </div>
+                            <div class="info-content">
+                                <h6 class="info-label">Target Score</h6>
+                                <span class="info-value">{{ game.score }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-card">
+                            <div class="info-icon">
+                                <i class="bi bi-globe text-success"></i>
+                            </div>
+                            <div class="info-content">
+                                <h6 class="info-label">Game Type</h6>
+                                <span class="info-value">
+                                    {% if game.online %}
+                                        <i class="bi bi-wifi me-1"></i>Online
+                                    {% else %}
+                                        <i class="bi bi-house me-1"></i>Local
+                                    {% endif %}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Persistent WebSocket connection (not swapped) -->
+                <div id="ws-connection" hx-ext="ws" ws-connect="/ws/multiplayer/{{ game.id }}/">
+                          <!-- Swappable lobby content -->
+                <div id="lobby-content">
+                    {% if not current_user_in_game %}
+                      {% include 'multiplayer/lobby/partials/lobby_pending.html' %}
+                    {% else %}
+                      {% include 'multiplayer/lobby/partials/player_list.html' %}
+                    {% endif %}
+                  </div>
+                </div>
+
+              
+             
+              
+
+                <!-- Game Rules -->
+                <div class="game-rules mt-4">
+                    <h6 class="rules-title">
+                        <i class="bi bi-info-circle me-2"></i>
+                        Game Rules
+                    </h6>
+                    <ul class="rules-list">
+                        <li>First player to reach exactly {{ game.score }} points wins</li>
+                        <li>If you go over {{ game.score }} points, your score resets to 0</li>
+                        <li>Players take turns throwing darts</li>
+                        <li>Maximum {{ game.max_players }} players allowed</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Back to Home -->
+        <div class="text-center mt-3">
+            <a href="{% url 'multiplayer_home' %}" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left me-2"></i>
+                Back to Multiplayer Home
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    // This assumes you have a WebSocket connection set up with the hx-ext="ws" attribute
+    // HTMX provides a custom event for when a message is received
+    document.body.addEventListener('htmx:wsAfterMessage', (evt) => {
+      const data = JSON.parse(evt.detail.message);
+      if (data.type === 'redirect') {
+        window.location.href = data.url;
+      }
+    });
+  </script>
+{% endblock %}

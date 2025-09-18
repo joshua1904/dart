@@ -1,6 +1,6 @@
 from django.urls import path
 from django.contrib.auth.decorators import login_required
-from .views import StartGame, GameView, ResultView, StatisticsView, MultiplayerStartGame, Lobby
+from .views import StartGame, GameView, ResultView, StatisticsView, MultiplayerStartGame, Lobby, MultiplayerGameView
 
 single_player_urlpatterns = [
     path('', login_required(StartGame.as_view()), name='home'),
@@ -12,6 +12,7 @@ single_player_urlpatterns = [
 multiplayer_urlpatterns = [
     path('multiplayer/', login_required(MultiplayerStartGame.as_view()), name='multiplayer_home'),
     path('multiplayer/lobby/<uuid:game_id>/', login_required(Lobby.as_view()), name='lobby'),
+    path('multiplayer/game/<uuid:game_id>/', login_required(MultiplayerGameView.as_view()), name='multiplayer_game'),
 ]
 
 urlpatterns = single_player_urlpatterns + multiplayer_urlpatterns
