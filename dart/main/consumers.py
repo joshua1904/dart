@@ -107,6 +107,20 @@ class GameConsumer(WebsocketConsumer):
                 data.update(parsed)
             except Exception:
                 pass
+        if data.get('action') == 'new_game':
+            new_game = MultiplayerGame(score=self.game.score, creator=self.user, max_players=self.game.max_players, online=self.game.online, status=1)
+            new_game.save()
+            for player in self.game.game_players.all():
+                MultiplayerPlayer.objects.create(game=new_game, player=player.player, rank=player.rank)
+            print(new_game.id)
+            event = {
+                'type': 'redirect_all',
+                'url': f"/multiplayer/game/{new_game.id}/"
+            }
+            # Send redirect to current game group (where clients are connected)
+            async_to_sync(self.channel_layer.group_send)(str(self.game_id), event)
+            return
+
 
         points = data.get('points')
         if not points:
@@ -115,10 +129,12 @@ class GameConsumer(WebsocketConsumer):
         player = self.game.game_players.get(rank=get_turn(self.game))
         if player.player != self.scope['user']:
             return
+
+        # add round returns true if game is ended
         if add_round(self.game, player, int(points)):
             event = {
-                'type': 'game_ended',
-                'game_id': self.game_id
+                'type': 'redirect_all',
+                'url': f"/multiplayer/game/{self.game_id}/overview/"
             }
             async_to_sync(self.channel_layer.group_send)(str(self.game_id), event)
             return
@@ -138,12 +154,13 @@ class GameConsumer(WebsocketConsumer):
         html = render_to_string('multiplayer/game/partials/game_card.html', context=context)
         self.send(text_data=f'<div id="game-content" hx-swap-oob="innerHTML">{html}</div>')
 
-    def game_ended(self, event):
-        game_id = event['game_id']
-        print("Game ended")
-        game = MultiplayerGame.objects.get(id=game_id)
-        context = get_game_context(game)
-        context['winner'] = game.winner
-        context['winner_stats'] = get_ending_context(game)['winner_stats']
-        html = render_to_string('multiplayer/game/partials/ending_screen.html', context=context)
-        self.send(text_data=f'<div id="game-content" hx-swap-oob="innerHTML">{html}</div>')
+    def redirect_all(self, event):
+        print(event)
+        url = event['url']
+        print(url, 'game url')
+        # Send JSON message with redirect instruction
+        redirect_message = {
+            'type': 'redirect',
+            'url': url
+        }
+        self.send(text_data=json.dumps(redirect_message))

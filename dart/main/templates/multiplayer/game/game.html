@@ -21,6 +21,17 @@
         Back to Lobby
     </a>
 </div>
+
+<script>
+    // This assumes you have a WebSocket connection set up with the hx-ext="ws" attribute
+    // HTMX provides a custom event for when a message is received
+    document.body.addEventListener('htmx:wsAfterMessage', (evt) => {
+      const data = JSON.parse(evt.detail.message);
+      if (data.type === 'redirect') {
+        window.location.href = data.url;
+      }
+    });
+</script>
 {% endblock %}
 
 
