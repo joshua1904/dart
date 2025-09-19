@@ -1,7 +1,7 @@
 from django.urls import path
-from .consumers import MultiplayerConsumer, GameConsumer
+from .consumers import GameConsumer, LobbyConsumer
 
 websocket_urlpatterns = [
-    path('ws/multiplayer/<uuid:game_id>/', MultiplayerConsumer.as_asgi()),
+    path('ws/lobby/<uuid:game_id>/', LobbyConsumer.as_asgi()),
     path('ws/<uuid:game_id>/', GameConsumer.as_asgi()),
 ]

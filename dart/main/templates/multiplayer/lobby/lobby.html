@@ -63,7 +63,7 @@
                     </div>
                 </div>
                 <!-- Persistent WebSocket connection (not swapped) -->
-                <div id="ws-connection" hx-ext="ws" ws-connect="/ws/multiplayer/{{ game.id }}/">
+                <div id="ws-connection" hx-ext="ws" ws-connect="/ws/lobby/{{ game.id }}/">
                           <!-- Swappable lobby content -->
                 <div id="lobby-content">
                     {% if not current_user_in_game %}
