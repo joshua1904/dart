@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404
 from django.db.models import Sum, Avg
 from main.models import MultiplayerGame, MultiplayerPlayer, MultiplayerRound
+from main.constants import checkout_map
 
 def get_game_info(game_id: int):
     game = get_object_or_404(MultiplayerGame, id=game_id)
@@ -36,11 +37,13 @@ def get_game_context(game) -> dict:
         queue_list.append({
             'player': player,
             'left_score': get_left_score(game, player),
+            'checkout_suggestion': get_checkout_suggestion(game, player),
         })
     return {
         'game': game,
         'turn': current_user,
         'left_score': get_left_score(game, current_user),
+        'checkout_suggestion': get_checkout_suggestion(game, current_user),
         'queue': queue_list,
     }
 def add_round(game, player, points) -> bool:
@@ -79,3 +82,7 @@ def get_ending_context(game) -> dict:
         'winner': game.winner,
         'winner_stats': winner_stats,
     }
+
+def get_checkout_suggestion(game, player) -> str:
+    left_score = get_left_score(game, player)
+    return checkout_map.get(str(left_score), "N/A")

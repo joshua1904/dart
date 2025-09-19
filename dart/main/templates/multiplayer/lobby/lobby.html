@@ -19,7 +19,13 @@
                             <i class="bi bi-people me-2"></i>
                             Game Lobby
                         </h3>
-                        <small class="opacity-75">Game ID: {{ game.id }}</small>
+                        <div class="d-flex align-items-center">
+                            <small class="opacity-75 me-3">Game ID: {{ game.id }}</small>
+                            <button class="btn btn-sm btn-outline-light" onclick="copyGameLink()" title="Copy game link">
+                                <i class="bi bi-link-45deg me-1"></i>
+                                Copy Link
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -107,5 +113,81 @@
         window.location.href = data.url;
       }
     });
+
+    // Copy game link to clipboard
+    function copyGameLink() {
+        const gameUrl = window.location.href;
+        
+        // Use the modern clipboard API if available
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(gameUrl).then(() => {
+                showCopySuccess();
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                fallbackCopyTextToClipboard(gameUrl);
+            });
+        } else {
+            // Fallback for older browsers
+            fallbackCopyTextToClipboard(gameUrl);
+        }
+    }
+
+    // Fallback method for older browsers
+    function fallbackCopyTextToClipboard(text) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.top = "0";
+        textArea.style.left = "0";
+        textArea.style.position = "fixed";
+        textArea.style.opacity = "0";
+        
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        
+        try {
+            const successful = document.execCommand('copy');
+            if (successful) {
+                showCopySuccess();
+            } else {
+                showCopyError();
+            }
+        } catch (err) {
+            console.error('Fallback: Oops, unable to copy', err);
+            showCopyError();
+        }
+        
+        document.body.removeChild(textArea);
+    }
+
+    // Show success feedback
+    function showCopySuccess() {
+        const button = event.target.closest('button');
+        const originalText = button.innerHTML;
+        button.innerHTML = '<i class="bi bi-check me-1"></i>Copied!';
+        button.classList.remove('btn-outline-light');
+        button.classList.add('btn-success');
+        
+        setTimeout(() => {
+            button.innerHTML = originalText;
+            button.classList.remove('btn-success');
+            button.classList.add('btn-outline-light');
+        }, 2000);
+    }
+
+    // Show error feedback
+    function showCopyError() {
+        const button = event.target.closest('button');
+        const originalText = button.innerHTML;
+        button.innerHTML = '<i class="bi bi-x me-1"></i>Failed';
+        button.classList.remove('btn-outline-light');
+        button.classList.add('btn-danger');
+        
+        setTimeout(() => {
+            button.innerHTML = originalText;
+            button.classList.remove('btn-danger');
+            button.classList.add('btn-outline-light');
+        }, 2000);
+    }
   </script>
 {% endblock %}
