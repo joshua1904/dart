@@ -14,6 +14,12 @@ logger = logging.getLogger(__name__)
 class GameConsumer(WebsocketConsumer):
     def connect(self):
         self.user = self.scope['user']
+        
+        # Check if user is authenticated
+        if not self.user.is_authenticated:
+            self.close()
+            return
+            
         self.game_id = self.scope['url_route']['kwargs']['game_id']
         self.game = MultiplayerGame.objects.get(id=self.game_id)
         async_to_sync(self.channel_layer.group_add)(str(self.game_id), self.channel_name)

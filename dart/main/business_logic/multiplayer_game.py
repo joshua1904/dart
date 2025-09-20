@@ -3,7 +3,7 @@ from django.db.models import Sum, Avg
 
 from main.business_logic.utils import get_points_of_round, get_checkout_suggestion  
 from main.models import MultiplayerGame, MultiplayerPlayer, MultiplayerRound
-
+from main.utils import GameStatus
 
 def get_game_info(game_id: int):
     game = get_object_or_404(MultiplayerGame, id=game_id)
@@ -52,7 +52,7 @@ def add_round(game, player, points) -> bool:
     points = get_points_of_round(left_score, points)
     MultiplayerRound(game=game, player=player, points=points).save()
     if left_score == points:
-        game.status = 2
+        game.status = GameStatus.WON.value
         game.winner = player
         game.save()
         return True

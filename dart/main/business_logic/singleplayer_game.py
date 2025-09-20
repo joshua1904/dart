@@ -2,6 +2,7 @@ from django.db.models import Sum
 
 from main.business_logic.utils import get_points_of_round, get_checkout_suggestion
 from main.models import Round, Game
+from main.utils import GameStatus
 
 
 def get_game_context(game: Game) -> dict:
@@ -24,10 +25,11 @@ def add_round(game: Game, points: int):
      Round(game=game, points=points).save()
      left_points -= points
      if left_points == 0:
-         game.status = 1
+         game.status = GameStatus.WON.value
          game.save()
+         return game.status
      if game.game_rounds.count() == game.rounds:
-         game.status = 2
+         game.status = GameStatus.LOST.value
          game.save()
      return game.status
 

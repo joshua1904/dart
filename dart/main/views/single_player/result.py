@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse_lazy
 from django.utils import timezone
 from main.models import Game
+from main.utils import GameStatus
 
 class ResultView(views.View):
     def get(self, request, game_id):
@@ -15,9 +16,9 @@ class ResultView(views.View):
 
         games_today = Game.objects.filter(date=timezone.now(), rounds=game.rounds, score=game.score).order_by('-id')
         last_5 = len(games_today[:5])
-        last_5_won = sum(1 for game in games_today[:5] if game.status == 1)
-        games_today_won = games_today.filter(status=1).count()
-        games_today_lost = games_today.filter(status=2).count()
+        last_5_won = sum(1 for game in games_today[:5] if game.status == GameStatus.WON.value)
+        games_today_won = games_today.filter(status=GameStatus.WON.value).count()
+        games_today_lost = games_today.filter(status=GameStatus.LOST.value).count()
 
         return render(request, "single_player/result.html", context={
             'game': game,

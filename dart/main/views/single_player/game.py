@@ -14,7 +14,6 @@ class GameView(views.View):
         return render(request, 'single_player/game.html', context=get_game_context(game))
 
     def post(self, request, game_id):
-
         points = int(request.POST.get('points', 0))
         game = get_object_or_404(Game, id=game_id)
         if request.user != game.player:
