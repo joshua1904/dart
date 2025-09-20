@@ -3,6 +3,7 @@ from django.db.models import Sum, Avg
 from main.models import MultiplayerGame, MultiplayerPlayer, MultiplayerRound
 from main.constants import checkout_map
 
+
 def get_game_info(game_id: int):
     game = get_object_or_404(MultiplayerGame, id=game_id)
     return game
@@ -29,7 +30,6 @@ def get_queue(game, turn: int) -> list:
     return queue[turn:] + queue[:turn -1]
 
 def get_game_context(game) -> dict:
-    print(get_turn(game))
     current_user = get_object_or_404(MultiplayerPlayer, game=game, rank=get_turn(game))
     queue_list = []
     for rank in get_queue(game, current_user.rank):
@@ -51,9 +51,12 @@ def add_round(game, player, points) -> bool:
         points = 180
     if points < 0:
         points = 0
+
     left_score = get_left_score(game, player)
     print(left_score, points)
-    if left_score - points < 0:
+    if left_score - points < 0 or left_score - points == 1:
+        points = 0
+    if left_score == points and points not in checkout_map:
         points = 0
     MultiplayerRound(game=game, player=player, points=points).save()
     if left_score == points:
@@ -85,4 +88,4 @@ def get_ending_context(game) -> dict:
 
 def get_checkout_suggestion(game, player) -> str:
     left_score = get_left_score(game, player)
-    return checkout_map.get(str(left_score), "N/A")
+    return checkout_map.get(left_score, None)
