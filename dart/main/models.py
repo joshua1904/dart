@@ -8,7 +8,7 @@ import uuid
 # single player
 class Game(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    date = models.DateField(default=timezone.now())
+    date = models.DateField(default=timezone.now)
     rounds = models.IntegerField(validators=[MinValueValidator(0)])
     score = models.IntegerField(validators=[MinValueValidator(0)])
     status = models.IntegerField(
@@ -27,7 +27,7 @@ class Round(models.Model):
 # multiplayer
 class MultiplayerGame(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    date = models.DateField(default=timezone.now())
+    date = models.DateField(default=timezone.now)
     score = models.IntegerField(validators=[MinValueValidator(0)])
     status = models.IntegerField(
         choices=MULTIPLAYER_GAME_STATUS_CHOICES,

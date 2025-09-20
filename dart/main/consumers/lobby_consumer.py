@@ -4,6 +4,7 @@ from asgiref.sync import async_to_sync
 from main.models import MultiplayerGame, MultiplayerPlayer
 from django.template.loader import render_to_string
 from urllib.parse import parse_qs
+from main.utils import MultiplayerGameStatus
 
 
 class LobbyConsumer(WebsocketConsumer):
