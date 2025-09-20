@@ -29,15 +29,7 @@
                         
                         <!-- Checkout Suggestion -->
                         {% if checkout_suggestion %}
-                        <div class="mt-3">
-                            <div class="alert alert-info d-flex align-items-center" role="alert">
-                                <i class="bi bi-lightbulb me-2"></i>
-                                <div>
-                                    <strong>Checkout Suggestion:</strong>
-                                    <span class="ms-2 fw-bold text-primary">{{ checkout_suggestion }}</span>
-                                </div>
-                            </div>
-                        </div>
+                        {% include "partials/checkout_suggestion.html" %}
                         {% endif %}
                     </div>
                 </div>
