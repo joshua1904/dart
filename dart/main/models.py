@@ -1,11 +1,13 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
+from django.db.models import ForeignKey
 from django.utils import timezone
 from main.utils import GAME_STATUS_CHOICES, MULTIPLAYER_GAME_STATUS_CHOICES
 import uuid
 
 # single player
 class Game(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     date = models.DateField(default=timezone.now())
     rounds = models.IntegerField(validators=[MinValueValidator(0)])
     score = models.IntegerField(validators=[MinValueValidator(0)])
@@ -13,6 +15,7 @@ class Game(models.Model):
         choices=GAME_STATUS_CHOICES,
         default=0
     )
+    player = ForeignKey('auth.User', on_delete=models.CASCADE)
 
 
 class Round(models.Model):

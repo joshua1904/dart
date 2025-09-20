@@ -1,7 +1,8 @@
 from django.shortcuts import get_object_or_404
 from django.db.models import Sum, Avg
+
+from main.business_logic.utils import get_points_of_round, get_checkout_suggestion  
 from main.models import MultiplayerGame, MultiplayerPlayer, MultiplayerRound
-from main.constants import checkout_map
 
 
 def get_game_info(game_id: int):
@@ -37,35 +38,24 @@ def get_game_context(game) -> dict:
         queue_list.append({
             'player': player,
             'left_score': get_left_score(game, player),
-            'checkout_suggestion': get_checkout_suggestion(game, player),
+            'checkout_suggestion': get_checkout_suggestion(get_left_score(game, player)),
         })
     return {
         'game': game,
         'turn': current_user,
         'left_score': get_left_score(game, current_user),
-        'checkout_suggestion': get_checkout_suggestion(game, current_user),
+        'checkout_suggestion': get_checkout_suggestion(get_left_score(game, current_user)),
         'queue': queue_list,
     }
 def add_round(game, player, points) -> bool:
-    if points > 180:
-        points = 180
-    if points < 0:
-        points = 0
-
     left_score = get_left_score(game, player)
-    print(left_score, points)
-    if left_score - points < 0 or left_score - points == 1:
-        points = 0
-    if left_score == points and points not in checkout_map:
-        points = 0
+    points = get_points_of_round(left_score, points)
     MultiplayerRound(game=game, player=player, points=points).save()
     if left_score == points:
         game.status = 2
         game.winner = player
         game.save()
-        print("Game ended")
         return True
-    print("Game not ended")
     return False
 
 
@@ -85,7 +75,3 @@ def get_ending_context(game) -> dict:
         'winner': game.winner,
         'winner_stats': winner_stats,
     }
-
-def get_checkout_suggestion(game, player) -> str:
-    left_score = get_left_score(game, player)
-    return checkout_map.get(left_score, None)

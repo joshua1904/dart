@@ -18,7 +18,7 @@
             <div class="card-body text-center">
                 <!-- Progress Stats -->
                 <div class="row g-3 mb-4">
-                    <div class="col-6">
+                    <div class="col-6 col-lg-4">
                         <div class="p-3 rounded-3 stats-card-rounds">
                             <div class="d-flex align-items-center justify-content-center mb-2">
                                 <i class="bi bi-arrow-clockwise text-primary fs-4 me-2"></i>
@@ -31,7 +31,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-6 col-lg-4">
                         <div class="p-3 rounded-3 stats-card-score">
                             <div class="d-flex align-items-center justify-content-center mb-2">
                                 <i class="bi bi-target text-warning fs-4 me-2"></i>
@@ -44,7 +44,57 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-12 col-lg-4">
+                        <div class="p-3 rounded-3 stats-card-average">
+                            <div class="d-flex align-items-center justify-content-center mb-2">
+                                <i class="bi bi-graph-up text-success fs-4 me-2"></i>
+                                <span class="fw-bold text-success fs-5">{{ average_score }}</span>
+                            </div>
+                            <small class="text-muted d-block">Average per Round</small>
+                            <div class="progress mt-2 progress-thin">
+                                <div class="progress-bar bg-success" role="progressbar" 
+                                     style="width: {% widthratio average_score 180 100 %}%"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- Checkout Suggestion -->
+                {% if checkout_suggestion %}
+                <div class="alert alert-info mb-4">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-lightbulb me-2 fs-5"></i>
+                        <div>
+                            <strong>Checkout Suggestion:</strong>
+                            <span class="ms-2 font-monospace fs-6">{{ checkout_suggestion }}</span>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Additional Stats -->
+                {% if round_count > 0 %}
+                <div class="row g-3 mb-4">
+                    <div class="col-6">
+                        <div class="bg-light rounded-3 p-3 text-center">
+                            <div class="d-flex align-items-center justify-content-center mb-1">
+                                <i class="bi bi-trophy text-warning me-2"></i>
+                                <span class="fw-bold text-dark">{{ total_points_scored }}</span>
+                            </div>
+                            <small class="text-muted">Total Points</small>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="bg-light rounded-3 p-3 text-center">
+                            <div class="d-flex align-items-center justify-content-center mb-1">
+                                <i class="bi bi-clock text-info me-2"></i>
+                                <span class="fw-bold text-dark">{{ game.rounds|add:"-"|add:round_count }}</span>
+                            </div>
+                            <small class="text-muted">Rounds Left</small>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
 
                 <!-- Game Form -->
                 <div class="bg-light rounded-3 p-4">
@@ -54,30 +104,36 @@
                     </h5>
                     <form method="post" action="" class="needs-validation" novalidate>
                         {% csrf_token %}
-                        <div class="row g-3">
-                            <div class="col-8">
-                                <div class="input-group">
-                                    <span class="input-group-text bg-white border-end-0">
-                                        <i class="bi bi-123 text-muted"></i>
-                                    </span>
-                                    <input type="number" 
-                                           name="this_score" 
-                                           class="form-control border-start-0" 
-                                           placeholder="Enter score..."
-                                           min="0" 
-                                           max="180" 
-                                           value="0"
-                                           required>
+                        {% include "partials/point_input.html" %}
+                        
+                        <!-- Quick Score Selection for Mobile -->
+                        <div class="mt-4 d-block d-sm-none">
+                            <h6 class="text-muted mb-3">Quick Select:</h6>
+                            <div class="row g-2">
+                                <div class="col-3">
+                                    <button type="button" class="btn btn-outline-primary btn-sm w-100 quick-score" data-score="180">180</button>
                                 </div>
-                                <div class="invalid-feedback text-start">
-                                    Please enter a valid score between 0 and 180.
+                                <div class="col-3">
+                                    <button type="button" class="btn btn-outline-primary btn-sm w-100 quick-score" data-score="140">140</button>
                                 </div>
-                            </div>
-                            <div class="col-4">
-                                <button type="submit" class="btn btn-primary w-100">
-                                    <i class="bi bi-check-circle me-2"></i>
-                                    Submit
-                                </button>
+                                <div class="col-3">
+                                    <button type="button" class="btn btn-outline-primary btn-sm w-100 quick-score" data-score="100">100</button>
+                                </div>
+                                <div class="col-3">
+                                    <button type="button" class="btn btn-outline-primary btn-sm w-100 quick-score" data-score="60">60</button>
+                                </div>
+                                <div class="col-3">
+                                    <button type="button" class="btn btn-outline-primary btn-sm w-100 quick-score" data-score="40">40</button>
+                                </div>
+                                <div class="col-3">
+                                    <button type="button" class="btn btn-outline-primary btn-sm w-100 quick-score" data-score="20">20</button>
+                                </div>
+                                <div class="col-3">
+                                    <button type="button" class="btn btn-outline-primary btn-sm w-100 quick-score" data-score="0">0</button>
+                                </div>
+                                <div class="col-3">
+                                    <button type="button" class="btn btn-outline-secondary btn-sm w-100" onclick="document.querySelector('input[name=this_score]').value=''">Clear</button>
+                                </div>
                             </div>
                         </div>
                     </form>
@@ -104,5 +160,33 @@
         });
     }, false);
 })();
+
+// Quick score selection for mobile
+document.addEventListener('DOMContentLoaded', function() {
+    const quickScoreButtons = document.querySelectorAll('.quick-score');
+    const scoreInput = document.querySelector('input[name="this_score"]');
+    
+    quickScoreButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const score = this.getAttribute('data-score');
+            scoreInput.value = score;
+            scoreInput.focus();
+            
+            // Visual feedback
+            quickScoreButtons.forEach(btn => btn.classList.remove('btn-primary'));
+            quickScoreButtons.forEach(btn => btn.classList.add('btn-outline-primary'));
+            this.classList.remove('btn-outline-primary');
+            this.classList.add('btn-primary');
+        });
+    });
+    
+    // Reset quick score buttons when typing manually
+    scoreInput.addEventListener('input', function() {
+        quickScoreButtons.forEach(btn => {
+            btn.classList.remove('btn-primary');
+            btn.classList.add('btn-outline-primary');
+        });
+    });
+});
 </script>
 {% endblock %}

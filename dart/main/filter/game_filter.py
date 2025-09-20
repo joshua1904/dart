@@ -1,18 +1,30 @@
 import django_filters
-from django.db.models import Q
 from django import forms
+from django.utils.functional import lazy
 from main.models import Game
-from main.utils import GAME_STATUS_CHOICES
-from django.urls import reverse_lazy
+
+def get_rounds_choices():
+    """Lazy function to get rounds choices from database"""
+    try:
+        return [(i, i) for i in Game.objects.values_list('rounds', flat=True).distinct() if i is not None]
+    except Exception:
+        return []
+
+def get_score_choices():
+    """Lazy function to get score choices from database"""
+    try:
+        return [(i, i) for i in Game.objects.values_list('score', flat=True).distinct() if i is not None]
+    except Exception:
+        return []
 
 class GameFilter(django_filters.FilterSet):
     rounds = django_filters.ChoiceFilter(
-        choices=[(i, i) for i in Game.objects.values_list('rounds', flat=True).distinct()],
+        choices=lazy(get_rounds_choices, list)(),
         widget=forms.Select(attrs={'class': 'form-control'})
     )
     
     score = django_filters.ChoiceFilter(
-        choices=[(i, i) for i in Game.objects.values_list('score', flat=True).distinct()],
+        choices=lazy(get_score_choices, list)(),
         widget=forms.Select(attrs={'class': 'form-control'})
     )
     

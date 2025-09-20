@@ -19,5 +19,7 @@ class StartGame(views.View):
                 'rounds': 3, 'score': 121, 'form': form
             })
 
-        game = form.save()
+        game = form.save(commit=False)
+        game.player = request.user
+        game.save()
         return redirect(reverse_lazy('game', kwargs={'game_id': game.id}))

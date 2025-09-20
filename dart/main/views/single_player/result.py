@@ -35,6 +35,6 @@ class ResultView(views.View):
     def post(self, request, game_id):
         """create new game with same stats"""
         last_game = get_object_or_404(Game, id=game_id)
-        new_game = Game(rounds=last_game.rounds, score=last_game.score)
+        new_game = Game(rounds=last_game.rounds, score=last_game.score, player=last_game.player)
         new_game.save()
         return redirect(reverse_lazy('game', kwargs={'game_id': new_game.id}))

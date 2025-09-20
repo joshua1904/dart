@@ -8,8 +8,8 @@ home_urlpatterns = [
 
 single_player_urlpatterns = [
     path('singleplayer/', login_required(StartGame.as_view()), name='singleplayer'),
-    path('singleplayer/game/<int:game_id>/', login_required(GameView.as_view()), name='game'),
-    path('singleplayer/results/<int:game_id>/', login_required(ResultView.as_view()), name='result'),
+    path('singleplayer/game/<uuid:game_id>/', login_required(GameView.as_view()), name='game'),
+    path('singleplayer/results/<uuid:game_id>/', login_required(ResultView.as_view()), name='result'),
     path('singleplayer/statistics/', login_required(StatisticsView.as_view()), name='statistics'),
 ]
 
