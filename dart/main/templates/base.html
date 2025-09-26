@@ -40,9 +40,21 @@
         <header>
             <h1>{% block header %}<a href="{% url 'home' %}">🎯 Dart</a>{% endblock %}</h1>
         </header>
-
+        {% if messages %}
+          <div class="messages">
+            {% for message in messages %}
+                <div
+                    class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %}"
+                    role="alert"
+                >
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
         <!-- Main content area -->
         <main class="container">
+
             {% block content %}{% endblock %}
         </main>
     </div>

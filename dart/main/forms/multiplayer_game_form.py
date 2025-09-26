@@ -14,9 +14,11 @@ class MultiplayerGameForm(forms.ModelForm):
     )
     online = forms.BooleanField(
         label="Online",
+        required=False,
         widget=forms.CheckboxInput(attrs={
             'class': 'form-check-input',
             'default': False,
+
         })
     )
     score = forms.IntegerField(
