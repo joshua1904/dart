@@ -7,6 +7,7 @@ from .multiplayer.start_game import StartGame as MultiplayerStartGame
 from .multiplayer.lobby import Lobby
 from .multiplayer.game import MultiplayerGameView
 from .multiplayer.game_overview import MultiplayerGameOverviewView
+
 __all__ = [
     HomeView.__name__,
     StartGame.__name__,
@@ -17,4 +18,3 @@ __all__ = [
     MultiplayerGameView.__name__,
     MultiplayerGameOverviewView.__name__,
 ]
-

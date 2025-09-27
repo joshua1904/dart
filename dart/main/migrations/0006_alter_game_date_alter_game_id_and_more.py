@@ -8,23 +8,33 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0005_game_player_alter_game_date_and_more'),
+        ("main", "0005_game_player_alter_game_date_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='game',
-            name='date',
-            field=models.DateField(default=datetime.datetime(2025, 9, 20, 14, 25, 22, 193107, tzinfo=datetime.timezone.utc)),
+            model_name="game",
+            name="date",
+            field=models.DateField(
+                default=datetime.datetime(
+                    2025, 9, 20, 14, 25, 22, 193107, tzinfo=datetime.timezone.utc
+                )
+            ),
         ),
         migrations.AlterField(
-            model_name='game',
-            name='id',
-            field=models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False),
+            model_name="game",
+            name="id",
+            field=models.UUIDField(
+                default=uuid.uuid4, editable=False, primary_key=True, serialize=False
+            ),
         ),
         migrations.AlterField(
-            model_name='multiplayergame',
-            name='date',
-            field=models.DateField(default=datetime.datetime(2025, 9, 20, 14, 25, 22, 193618, tzinfo=datetime.timezone.utc)),
+            model_name="multiplayergame",
+            name="date",
+            field=models.DateField(
+                default=datetime.datetime(
+                    2025, 9, 20, 14, 25, 22, 193618, tzinfo=datetime.timezone.utc
+                )
+            ),
         ),
     ]

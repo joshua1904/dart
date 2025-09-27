@@ -10,26 +10,76 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Game',
+            name="Game",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('date', models.DateField(default=datetime.datetime(2025, 8, 24, 15, 4, 26, 99543, tzinfo=datetime.timezone.utc))),
-                ('rounds', models.IntegerField(validators=[django.core.validators.MinValueValidator(0)])),
-                ('score', models.IntegerField(validators=[django.core.validators.MinValueValidator(0)])),
-                ('status', models.IntegerField(choices=[(0, 'in progress'), (1, 'won'), (2, 'lost')], default=0)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "date",
+                    models.DateField(
+                        default=datetime.datetime(
+                            2025, 8, 24, 15, 4, 26, 99543, tzinfo=datetime.timezone.utc
+                        )
+                    ),
+                ),
+                (
+                    "rounds",
+                    models.IntegerField(
+                        validators=[django.core.validators.MinValueValidator(0)]
+                    ),
+                ),
+                (
+                    "score",
+                    models.IntegerField(
+                        validators=[django.core.validators.MinValueValidator(0)]
+                    ),
+                ),
+                (
+                    "status",
+                    models.IntegerField(
+                        choices=[(0, "in progress"), (1, "won"), (2, "lost")], default=0
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Round',
+            name="Round",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('points', models.IntegerField(validators=[django.core.validators.MaxValueValidator(180), django.core.validators.MinValueValidator(0)])),
-                ('game', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='main.game')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "points",
+                    models.IntegerField(
+                        validators=[
+                            django.core.validators.MaxValueValidator(180),
+                            django.core.validators.MinValueValidator(0),
+                        ]
+                    ),
+                ),
+                (
+                    "game",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="main.game"
+                    ),
+                ),
             ],
         ),
     ]

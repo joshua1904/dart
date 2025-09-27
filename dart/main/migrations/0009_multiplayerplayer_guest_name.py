@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0008_alter_multiplayerplayer_player'),
+        ("main", "0008_alter_multiplayerplayer_player"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='multiplayerplayer',
-            name='guest_name',
+            model_name="multiplayerplayer",
+            name="guest_name",
             field=models.CharField(max_length=20, null=True),
         ),
     ]

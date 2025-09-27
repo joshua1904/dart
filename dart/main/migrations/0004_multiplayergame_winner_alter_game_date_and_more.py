@@ -8,23 +8,37 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0003_multiplayergame_creator_alter_game_date_and_more'),
+        ("main", "0003_multiplayergame_creator_alter_game_date_and_more"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='multiplayergame',
-            name='winner',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='winner', to='main.multiplayerplayer'),
+            model_name="multiplayergame",
+            name="winner",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="winner",
+                to="main.multiplayerplayer",
+            ),
         ),
         migrations.AlterField(
-            model_name='game',
-            name='date',
-            field=models.DateField(default=datetime.datetime(2025, 9, 18, 13, 23, 57, 112018, tzinfo=datetime.timezone.utc)),
+            model_name="game",
+            name="date",
+            field=models.DateField(
+                default=datetime.datetime(
+                    2025, 9, 18, 13, 23, 57, 112018, tzinfo=datetime.timezone.utc
+                )
+            ),
         ),
         migrations.AlterField(
-            model_name='multiplayergame',
-            name='date',
-            field=models.DateField(default=datetime.datetime(2025, 9, 18, 13, 23, 57, 112588, tzinfo=datetime.timezone.utc)),
+            model_name="multiplayergame",
+            name="date",
+            field=models.DateField(
+                default=datetime.datetime(
+                    2025, 9, 18, 13, 23, 57, 112588, tzinfo=datetime.timezone.utc
+                )
+            ),
         ),
     ]

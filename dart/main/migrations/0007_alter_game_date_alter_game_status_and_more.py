@@ -7,28 +7,32 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0006_alter_game_date_alter_game_id_and_more'),
+        ("main", "0006_alter_game_date_alter_game_id_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='game',
-            name='date',
+            model_name="game",
+            name="date",
             field=models.DateField(default=django.utils.timezone.now),
         ),
         migrations.AlterField(
-            model_name='game',
-            name='status',
-            field=models.IntegerField(choices=[(0, 'PROGRESS'), (1, 'WON'), (2, 'LOST')], default=0),
+            model_name="game",
+            name="status",
+            field=models.IntegerField(
+                choices=[(0, "PROGRESS"), (1, "WON"), (2, "LOST")], default=0
+            ),
         ),
         migrations.AlterField(
-            model_name='multiplayergame',
-            name='date',
+            model_name="multiplayergame",
+            name="date",
             field=models.DateField(default=django.utils.timezone.now),
         ),
         migrations.AlterField(
-            model_name='multiplayergame',
-            name='status',
-            field=models.IntegerField(choices=[(0, 'WAITING'), (1, 'PROGRESS'), (2, 'FINISHED')], default=0),
+            model_name="multiplayergame",
+            name="status",
+            field=models.IntegerField(
+                choices=[(0, "WAITING"), (1, "PROGRESS"), (2, "FINISHED")], default=0
+            ),
         ),
     ]

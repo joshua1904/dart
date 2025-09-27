@@ -10,30 +10,47 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0004_multiplayergame_winner_alter_game_date_and_more'),
+        ("main", "0004_multiplayergame_winner_alter_game_date_and_more"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='game',
-            name='player',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+            model_name="game",
+            name="player",
+            field=models.ForeignKey(
+                default=1,
+                on_delete=django.db.models.deletion.CASCADE,
+                to=settings.AUTH_USER_MODEL,
+            ),
             preserve_default=False,
         ),
         migrations.AlterField(
-            model_name='game',
-            name='date',
-            field=models.DateField(default=datetime.datetime(2025, 9, 20, 14, 21, 36, 205397, tzinfo=datetime.timezone.utc)),
+            model_name="game",
+            name="date",
+            field=models.DateField(
+                default=datetime.datetime(
+                    2025, 9, 20, 14, 21, 36, 205397, tzinfo=datetime.timezone.utc
+                )
+            ),
         ),
         migrations.AlterField(
-            model_name='multiplayergame',
-            name='date',
-            field=models.DateField(default=datetime.datetime(2025, 9, 20, 14, 21, 36, 205971, tzinfo=datetime.timezone.utc)),
+            model_name="multiplayergame",
+            name="date",
+            field=models.DateField(
+                default=datetime.datetime(
+                    2025, 9, 20, 14, 21, 36, 205971, tzinfo=datetime.timezone.utc
+                )
+            ),
         ),
         migrations.AlterField(
-            model_name='multiplayergame',
-            name='max_players',
-            field=models.IntegerField(validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(10)]),
+            model_name="multiplayergame",
+            name="max_players",
+            field=models.IntegerField(
+                validators=[
+                    django.core.validators.MinValueValidator(1),
+                    django.core.validators.MaxValueValidator(10),
+                ]
+            ),
         ),
     ]

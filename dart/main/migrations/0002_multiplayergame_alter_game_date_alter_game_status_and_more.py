@@ -11,53 +11,148 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0001_initial'),
+        ("main", "0001_initial"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='MultiplayerGame',
+            name="MultiplayerGame",
             fields=[
-                ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
-                ('date', models.DateField(default=datetime.datetime(2025, 9, 17, 9, 57, 41, 345526, tzinfo=datetime.timezone.utc))),
-                ('score', models.IntegerField(validators=[django.core.validators.MinValueValidator(0)])),
-                ('status', models.IntegerField(choices=[(0, 'Waiting'), (1, 'Progress'), (2, 'Finished')], default=0)),
-                ('online', models.BooleanField(default=False)),
-                ('max_players', models.IntegerField(validators=[django.core.validators.MinValueValidator(2), django.core.validators.MaxValueValidator(10)])),
+                (
+                    "id",
+                    models.UUIDField(
+                        default=uuid.uuid4,
+                        editable=False,
+                        primary_key=True,
+                        serialize=False,
+                    ),
+                ),
+                (
+                    "date",
+                    models.DateField(
+                        default=datetime.datetime(
+                            2025, 9, 17, 9, 57, 41, 345526, tzinfo=datetime.timezone.utc
+                        )
+                    ),
+                ),
+                (
+                    "score",
+                    models.IntegerField(
+                        validators=[django.core.validators.MinValueValidator(0)]
+                    ),
+                ),
+                (
+                    "status",
+                    models.IntegerField(
+                        choices=[(0, "Waiting"), (1, "Progress"), (2, "Finished")],
+                        default=0,
+                    ),
+                ),
+                ("online", models.BooleanField(default=False)),
+                (
+                    "max_players",
+                    models.IntegerField(
+                        validators=[
+                            django.core.validators.MinValueValidator(2),
+                            django.core.validators.MaxValueValidator(10),
+                        ]
+                    ),
+                ),
             ],
         ),
         migrations.AlterField(
-            model_name='game',
-            name='date',
-            field=models.DateField(default=datetime.datetime(2025, 9, 17, 9, 57, 41, 345066, tzinfo=datetime.timezone.utc)),
+            model_name="game",
+            name="date",
+            field=models.DateField(
+                default=datetime.datetime(
+                    2025, 9, 17, 9, 57, 41, 345066, tzinfo=datetime.timezone.utc
+                )
+            ),
         ),
         migrations.AlterField(
-            model_name='game',
-            name='status',
-            field=models.IntegerField(choices=[(0, 'Progress'), (1, 'Won'), (2, 'Lost')], default=0),
+            model_name="game",
+            name="status",
+            field=models.IntegerField(
+                choices=[(0, "Progress"), (1, "Won"), (2, "Lost")], default=0
+            ),
         ),
         migrations.AlterField(
-            model_name='round',
-            name='game',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='game_rounds', to='main.game'),
+            model_name="round",
+            name="game",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="game_rounds",
+                to="main.game",
+            ),
         ),
         migrations.CreateModel(
-            name='MultiplayerPlayer',
+            name="MultiplayerPlayer",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('rank', models.IntegerField()),
-                ('game', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='game_players', to='main.multiplayergame')),
-                ('player', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("rank", models.IntegerField()),
+                (
+                    "game",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="game_players",
+                        to="main.multiplayergame",
+                    ),
+                ),
+                (
+                    "player",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='MultiplayerRound',
+            name="MultiplayerRound",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('points', models.IntegerField(validators=[django.core.validators.MaxValueValidator(180), django.core.validators.MinValueValidator(0)])),
-                ('game', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='game_rounds', to='main.multiplayergame')),
-                ('player', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='player_rounds', to='main.multiplayerplayer')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "points",
+                    models.IntegerField(
+                        validators=[
+                            django.core.validators.MaxValueValidator(180),
+                            django.core.validators.MinValueValidator(0),
+                        ]
+                    ),
+                ),
+                (
+                    "game",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="game_rounds",
+                        to="main.multiplayergame",
+                    ),
+                ),
+                (
+                    "player",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="player_rounds",
+                        to="main.multiplayerplayer",
+                    ),
+                ),
             ],
         ),
     ]

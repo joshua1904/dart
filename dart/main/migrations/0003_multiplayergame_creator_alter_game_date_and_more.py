@@ -9,25 +9,37 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0002_multiplayergame_alter_game_date_alter_game_status_and_more'),
+        ("main", "0002_multiplayergame_alter_game_date_alter_game_status_and_more"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='multiplayergame',
-            name='creator',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+            model_name="multiplayergame",
+            name="creator",
+            field=models.ForeignKey(
+                default=1,
+                on_delete=django.db.models.deletion.CASCADE,
+                to=settings.AUTH_USER_MODEL,
+            ),
             preserve_default=False,
         ),
         migrations.AlterField(
-            model_name='game',
-            name='date',
-            field=models.DateField(default=datetime.datetime(2025, 9, 17, 15, 25, 37, 774125, tzinfo=datetime.timezone.utc)),
+            model_name="game",
+            name="date",
+            field=models.DateField(
+                default=datetime.datetime(
+                    2025, 9, 17, 15, 25, 37, 774125, tzinfo=datetime.timezone.utc
+                )
+            ),
         ),
         migrations.AlterField(
-            model_name='multiplayergame',
-            name='date',
-            field=models.DateField(default=datetime.datetime(2025, 9, 17, 15, 25, 37, 774655, tzinfo=datetime.timezone.utc)),
+            model_name="multiplayergame",
+            name="date",
+            field=models.DateField(
+                default=datetime.datetime(
+                    2025, 9, 17, 15, 25, 37, 774655, tzinfo=datetime.timezone.utc
+                )
+            ),
         ),
     ]
