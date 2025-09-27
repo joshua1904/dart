@@ -39,7 +39,7 @@
                
             </div>
         {% endfor %}
-        {% if game.creator == user and players.count == game.max_players %}
+        {% if game.creator == user %}
         <div class="mt-3">
             <form ws-send>
                 {% csrf_token %}

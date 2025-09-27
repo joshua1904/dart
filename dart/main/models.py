@@ -47,8 +47,13 @@ class MultiplayerRound(models.Model):
 
 class MultiplayerPlayer(models.Model):  
     game = models.ForeignKey('MultiplayerGame', on_delete=models.CASCADE, related_name='game_players')
-    player = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    player = models.ForeignKey('auth.User', on_delete=models.CASCADE, null=True, blank=True)
     rank = models.IntegerField()
+    guest_name = models.CharField(max_length=20, null=True)
 
     def __str__(self):
-        return f"{self.player.username}"
+        return self.player.username if self.player else self.guest_name or ""
+
+    @property
+    def display_name(self):
+        return self.player.username if self.player else self.guest_name or ""

@@ -31,6 +31,8 @@ def get_queue(game, turn: int) -> list:
     return queue[turn:] + queue[:turn -1]
 
 def get_game_context(game) -> dict:
+    print(get_turn(game), type(get_turn(game)))
+    print(MultiplayerPlayer.objects.filter(game=game))
     current_user = get_object_or_404(MultiplayerPlayer, game=game, rank=get_turn(game))
     queue_list = []
     for rank in get_queue(game, current_user.rank):

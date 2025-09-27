@@ -32,7 +32,7 @@ class GameConsumer(WebsocketConsumer):
         new_game = MultiplayerGame(score=self.game.score, creator=self.user, max_players=self.game.max_players, online=self.game.online, status=1)
         new_game.save()
         for player in self.game.game_players.all():
-            MultiplayerPlayer.objects.create(game=new_game, player=player.player, rank=player.rank)
+            MultiplayerPlayer.objects.create(game=new_game, player=player.player, rank=player.rank, guest_name=player.guest_name)
         logger.info(f"New game created: {new_game.id}")
         event = {
             'type': 'redirect_all',
@@ -61,7 +61,7 @@ class GameConsumer(WebsocketConsumer):
         if not points:
             points = 0
         player = self.game.game_players.get(rank=get_turn(self.game))
-        if player.player != self.scope['user']:
+        if player.player != self.scope['user'] and player.player != None:
             logger.warning(f"Player {player.player} is not the current player")
             return
 

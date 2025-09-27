@@ -1,7 +1,9 @@
+import copy
+from pprint import pprint
+
 from main.constants import checkout_map
 
 def get_points_of_round(left_score: int, points: int) -> int:
-    print(left_score, points)
     if points > 180:
         points = 180
     if points < 0:

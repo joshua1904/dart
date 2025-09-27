@@ -12,7 +12,6 @@ class StartGame(views.View):
     def post(self, request):
         form = MultiplayerGameForm(request.POST)
         if not form.is_valid():
-            print(form.errors)
             return render(request, 'multiplayer/start_game.html', context={'form': form})
 
         game = form.save(commit=False)

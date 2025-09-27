@@ -162,3 +162,25 @@ checkout_map = {
   3: "S1 D1",
   2: "D1"
 }
+
+first_names = [
+    "Luke", "Luke", "Michael", "Stephen", "James", "Jonny", "Gerwyn", "Chris",
+    "Rob", "Josh", "Damon", "Gary", "Danny", "Ross", "Peter", "Dave",
+    "Martin", "Gian", "Mike", "Ryan", "Michael", "Dimitri", "Nathan", "Ryan",
+    "Jermaine", "Daryl", "Joe", "Andrew", "Ritchie", "Ricardo", "Luke", "Dirk",
+    # "Cameron", "Raymond", "Krzysztof", "Scott", "Brendan", "Martin", "Wessel",
+    # "Gabriel", "Kevin", "Callan", "Mickey", "Niels", "William", "Madars",
+    # "Ricky", "Richard", "Kim", "Ian"
+]
+
+last_names = [
+    "Humphries", "Littler", "van Gerwen", "Bunting", "Wade", "Clayton", "Price", "Dobey",
+    "Cross", "Rock", "Heta", "Anderson", "Noppert", "Smith", "Wright", "Chisnall",
+    "Schindler", "van Veen", "De Decker", "Searle", "Smith", "Van den Bergh", "Aspinall", "Joyce",
+    "Wattimena", "Gurney", "Cullen", "Gilding", "Edhouse", "Pietreczko", "Woodhouse", "van Duijvenbode",
+    # "Menzies", "van Barneveld", "Ratajski", "Williams", "Dolan", "Lukeman", "Nijman",
+    # "Clemens", "Doets", "Rydz", "Mansell", "Zonneveld", "O'Connor", "Razma",
+    # "Evans", "Veenstra", "Huybrechts", "White"
+]
+
+print(len(first_names), len(last_names))
