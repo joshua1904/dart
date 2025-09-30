@@ -1,6 +1,3 @@
-import copy
-from pprint import pprint
-
 from main.constants import checkout_map
 
 

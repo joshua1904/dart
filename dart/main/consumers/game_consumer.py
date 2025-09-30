@@ -78,7 +78,6 @@ class GameConsumer(WebsocketConsumer):
         if player.player != self.scope["user"] and player.player != None:
             logger.warning(f"Player {player.player} is not the current player")
             return
-        print(player)
         # add round returns true if game is ended
         if add_round(self.game, player, int(points)):
             event = {

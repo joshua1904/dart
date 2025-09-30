@@ -238,5 +238,3 @@ last_names = [
     # "Clemens", "Doets", "Rydz", "Mansell", "Zonneveld", "O'Connor", "Razma",
     # "Evans", "Veenstra", "Huybrechts", "White"
 ]
-
-print(len(first_names), len(last_names))
